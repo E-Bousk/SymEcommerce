@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Product;
+// use App\Form\Type\PriceType; // !! pour exemple didactique, voir plus bas
+// use App\Form\DataTransformer\CentimesTransformer; // !! pour exemple didactique, voir plus bas
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -29,8 +31,9 @@ class ProductType extends AbstractType
                 'attr' => ['placeholder' => 'Entrez une courte description du produit']
             ])
             ->add('price', MoneyType::class, [
+            // ->add('price', PriceType::class, [ // !! pour exemple didactique avec 'PriceType.php'
                 // 'currency' => false,
-                'divisor' => 100,
+                'divisor' => 100, // !! a commenter lors des exemples didactiques (remplace cette instruction)
                 'label' => 'Prix du produit',
                 'attr' => ['placeholder' => 'Entrez le prix du produit (en €)'],
                 'required' => false,
@@ -47,7 +50,12 @@ class ProductType extends AbstractType
                 'class' => Category::class, // doit être suivi de « choice_label » pour fonctionner (sinon : erreur « Object of class App\Entity\Category could nit be converted to string »)
                 'choice_label' => 'name' // function (Category $category) {return strtoupper($category->getName());} (pour mettre en majuscule par exemple)
             ]);
+
+            // !! exemple didactique : pour transformer la somme en euro/centimes (remplace « 'divisor' => 100 » de 'price')
+            // $builder->get('price')->addModelTransformer(new CentimesTransformer);
         }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
