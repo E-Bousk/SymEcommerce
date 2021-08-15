@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Accueil
+{% endblock %}
+
+{% block body %}
+    <h1>Nos produits phares</h1>
+    <div class="row">
+        {% for p in products %}
+            <div class="col">
+                <div class="card">
+                    <img src={{ p.mainPicture }} class="img-fluid" alt="image produit">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ p.name }} ({{ p.price / 100 }}&euro;)</h4>
+                        <span class="badge badge-info">
+                            Catégorie : {{ p.category.name }}
+                        </span>
+                        <p class="card-text">{{ p.shortDescription }}</p>
+                        <a href="#" class="btn btn-primary btn-sm">Détails</a>
+                        <a href="#" class="btn btn-success btn-sm">Ajouter</a>
+                    </div>
+                </div> {# end of 'card' #}
+            </div> {# end of 'col' #}
+        {% endfor %}
+    </div> {# end of 'row' #}
+    <hr>
+    <h2>Un service irreprochable</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit cupiditate quas quis dignissimos eos eaque.</p>
+
+    <div class="row">
+        {% include "shared/_assurance.html.twig" with {
+            'color': 'primary',
+            'icon': 'fas fa-truck',
+            'text': "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores veritatis nisi explicabo obcaecati quidem quod."
+        } %}
+         {% include "shared/_assurance.html.twig" with {
+            'color': 'success',
+            'icon': 'fas fa-check',
+            'text': "aLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores veritatis nisi explicabo obcaecati quidem quod."
+        } %}
+        {% include "shared/_assurance.html.twig" with {
+            'color': 'warning',
+            'icon': 'fas fa-lock',
+            'text': "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores veritatis nisi explicabo obcaecati quidem quod."
+        } %}
+    </div> {# end of 'row' #}
+{% endblock %}
