@@ -8,6 +8,9 @@
     <h1>Édition du produit {{ product.name }}</h1>
     
     {{ form_start(formView) }}
+    {# pour supprimer la 'validation' HTML pour tester 
+    {{ form_start(formView, {'attr': {'novalidate':' novalidate'}}) }} #}
+
 
     {{ form_errors(formView) }}
 

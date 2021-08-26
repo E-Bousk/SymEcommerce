@@ -28,7 +28,8 @@ class ProductType extends AbstractType
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Description du produit',
-                'attr' => ['placeholder' => 'Entrez une courte description du produit']
+                'attr' => ['placeholder' => 'Entrez une courte description du produit'],
+                // 'required' => false
             ])
             ->add('price', MoneyType::class, [
             // ->add('price', PriceType::class, [ // !! pour exemple didactique avec 'PriceType.php'
@@ -42,7 +43,8 @@ class ProductType extends AbstractType
             ->add('mainPicture', UrlType::class, [
                 'label' => 'Image du produit',
                 'attr' => ['placeholder' => 'Entrez une URL d\'image'],
-                'default_protocol' => ''
+                'default_protocol' => '',
+                // 'required' => false
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie du produit',
