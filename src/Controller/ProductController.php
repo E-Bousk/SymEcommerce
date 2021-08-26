@@ -15,7 +15,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductController extends AbstractController {
     /**
-     * @Route("/{slug}", name="product_category")
+     * @Route("/{slug}", name="product_category", priority="-1")
      */
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
