@@ -17,65 +17,84 @@ class CategoryController extends AbstractController {
 
 
     /**
-     * @Route("/admin/category/create", name="category_create")
+     * @Route("/{slug}", name="category_show", priority="-1")
      */
-    public function create(Request $request, SluggerInterface $slugger,  EntityManagerInterface $em)
+    public function show($slug, CategoryRepository $categoryRepository): Response
     {
+        $category= $categoryRepository->findOneBy([
+            'slug' => $slug
+        ]);
 
-        $category= new Category;
-
-        $form= $this->createForm(CategoryType::class, $category);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
+        if (!$category)
         {
-            $category->setSlug(strtolower($slugger->slug($category->getName())));
-
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirectToRoute('homepage');
+            throw $this->createNotFoundException("La catégorie demandée n'existe pas");
         }
 
-        $formView= $form->createView();
-        
-        return $this->render('category/create.html.twig', [
-            'formView' => $formView
+        return $this->render('product/category.html.twig', [
+            'slug' => $slug,
+            'category' => $category
         ]);
-    } 
-
-
-
+    }
+    
     /**
      * @Route("/admin/category/{id}/edit", name="category_edit")
      */
     public function edit($id, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $em)
     {
         $category= $categoryRepository->find($id);
-
+        
         if (!$category) {
             throw new NotFoundHttpException("Cette catégorie n'existe pas !");
         }
-
+        
         // $this->denyAccessUnlessGranted('CAN_EDIT', $category, "Vous n'avez pas l'authorisation");
-
+        
         $form= $this->createForm(CategoryType::class, $category);
-
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid())
         {
             $em->flush();
-
+            
             return $this->redirectToRoute('homepage');
         }  
-
+        
         $formView= $form->createView();
-
+        
         return $this->render('category/edit.html.twig', [
             'category' => $category,
             'formView' => $formView
         ]);
     }
+
+
+    /**
+     * @Route("/admin/category/create", name="category_create")
+     */
+    public function create(Request $request, SluggerInterface $slugger,  EntityManagerInterface $em)
+    {
+    
+        $category= new Category;
+    
+        $form= $this->createForm(CategoryType::class, $category);
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $category->setSlug(strtolower($slugger->slug($category->getName())));
+    
+            $em->persist($category);
+            $em->flush();
+    
+            return $this->redirectToRoute('homepage');
+        }
+    
+        $formView= $form->createView();
+        
+        return $this->render('category/create.html.twig', [
+            'formView' => $formView
+        ]);
+    } 
 }

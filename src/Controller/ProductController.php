@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
-use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,28 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductController extends AbstractController {
-    /**
-     * @Route("/{slug}", name="product_category", priority="-1")
-     */
-    public function category($slug, CategoryRepository $categoryRepository): Response
-    {
-
-        $category= $categoryRepository->findOneBy([
-            'slug' => $slug
-        ]);
-
-        if (!$category)
-        {
-            throw $this->createNotFoundException("La catégorie demandée n'existe pas");
-        }
-
-        return $this->render('product/category.html.twig', [
-            'slug' => $slug,
-            'category' => $category
-        ]);
-    }
-
-
+   
     /**
      * @Route("/{category_slug}/{product_slug}", name="product_show")
      */
