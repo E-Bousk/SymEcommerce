@@ -17,7 +17,6 @@ class CartService
         $this->productRepository= $productRepository;
     }
 
-
     // Voir vidéo 16.14
     protected function getCart() : array
     {
@@ -27,6 +26,11 @@ class CartService
     protected function saveCart(array $cart)
     {
         $this->session->set('cart', $cart);
+    }
+
+    public function empty() 
+    {
+        $this->saveCart([]);
     }
 
     public function add(int $id) 
@@ -57,7 +61,6 @@ class CartService
 
         // pour vider la session :
         // $this->session->remove('cart');
-
     }
 
     public function remove(int $id)
@@ -68,7 +71,6 @@ class CartService
 
         $this->saveCart($cart);
     }
-    
     
     public function decrement(int $id)
     {
@@ -88,8 +90,6 @@ class CartService
         $this->saveCart($cart);
     }
 
-
-
     public function getTotal() : int
     {
         $total= 0;
@@ -106,7 +106,10 @@ class CartService
         return $total;
     }
     
-    
+    // Voir vidéo 17.11 à 4:55
+    /**
+     * @return cartItem[]
+     */
     public function getDetailedCartItems() : array
     {
         $detailedCart= [];
@@ -125,6 +128,5 @@ class CartService
         return $detailedCart;
 
         // dd($this->session->get('cart'), $detailedCart);
-        
     }
 }

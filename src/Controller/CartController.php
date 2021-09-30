@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Cart\CartService;
+use App\Form\CartConfirmationType;
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+// use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends AbstractController
 {
@@ -33,13 +35,16 @@ class CartController extends AbstractController
      */
     public function show(): Response
     {
+        $form= $this->createForm(CartConfirmationType::class);
 
         $detailedCart= $this->cartService->getDetailedCartItems();
+
         $total= $this->cartService->getTotal();
 
         return $this->render('cart/index.html.twig', [
             'items' => $detailedCart,
-            'total' => $total
+            'total' => $total,
+            'confirmationForm' => $form->createView()
         ]);
     }
 
@@ -71,6 +76,8 @@ class CartController extends AbstractController
         // Voir vidéo 16.13
         if ($request->query->get('returnToCart')) {
             return $this->redirectToRoute('cart_show');
+            // Une autre option, utiliser la variable php server REFERER qui recharge l'URL précédente
+            // return new RedirectResponse($request->headers->get('referer'));
         }
         
         return $this->redirectToRoute('product_show', [
