@@ -19,13 +19,11 @@ class PurchasePaymentSuccessController extends AbstractController
      * @Route("/purchase/complete/{id}", name="purchase_payment_success")
      * @IsGranted("ROLE_USER")
      */
-    public function success(
-                            $id,
+    public function success($id,
                             PurchaseRepository $purchaseRepository,
                             EntityManagerInterface $em,
                             CartService $cartService,
-                            EventDispatcherInterface $dispatcher                
-    )
+                            EventDispatcherInterface $dispatcher)
     {
         // 1. Je recupère la commande
         $purchase= $purchaseRepository->find($id);
