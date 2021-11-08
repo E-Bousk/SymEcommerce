@@ -26,8 +26,9 @@ class PurchasePersister
     {
         // 6. Nous allons la lier avec l'utilisateur actuellement connecté (Security)
         $purchase->setUser($this->security->getUser())
-                ->setPurchasedAt(new DateTime())
-                ->setTotal($this->cartService->getTotal())
+                // voir Vidéo 20.2
+                // ->setPurchasedAt(new DateTime())
+                // ->setTotal($this->cartService->getTotal())
         ;
         $this->em->persist($purchase);
         
@@ -35,11 +36,11 @@ class PurchasePersister
         foreach($this->cartService->getDetailedCartItems() as $cartItem) {
             $purchaseItem= new PurchaseItem;
             $purchaseItem->setPurchase($purchase)
-            ->setProduct($cartItem->product)
-            ->setProductName($cartItem->product->getName())
-            ->setQuantity($cartItem->quantity)
-            ->setTotal($cartItem->getTotalItem())
-            ->setProductPrice($cartItem->product->getPrice())
+                        ->setProduct($cartItem->product)
+                        ->setProductName($cartItem->product->getName())
+                        ->setQuantity($cartItem->quantity)
+                        ->setTotal($cartItem->getTotalItem())
+                        ->setProductPrice($cartItem->product->getPrice())
             ;
 
             $this->em->persist($purchaseItem);

@@ -3,8 +3,9 @@
 namespace App\Event;
 
 use App\Entity\Product;
+use Symfony\Contracts\EventDispatcher\Event;
 
-class ProductViewEvent
+class ProductViewEvent extends Event
 {
     private $product;
 
