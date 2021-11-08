@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
+// use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -72,7 +72,9 @@ class CategoryController extends AbstractController {
     /**
      * @Route("/admin/category/create", name="category_create")
      */
-    public function create(Request $request, SluggerInterface $slugger,  EntityManagerInterface $em)
+    public function create(Request $request, 
+                        // SluggerInterface $slugger, 
+                        EntityManagerInterface $em)
     {
     
         $category= new Category;
@@ -83,7 +85,8 @@ class CategoryController extends AbstractController {
     
         if ($form->isSubmitted() && $form->isValid())
         {
-            $category->setSlug(strtolower($slugger->slug($category->getName())));
+            // depuis la vidéo 20.7, le slug est crée avec "App\Doctrine\Listener\CategorySlugListener"
+            // $category->setSlug(strtolower($slugger->slug($category->getName())));
     
             $em->persist($category);
             $em->flush();

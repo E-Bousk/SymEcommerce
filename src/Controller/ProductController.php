@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
+// use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -85,7 +85,9 @@ class ProductController extends AbstractController {
     /**
      * @Route("/admin/product/create", name="product_create")
      */
-    public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
+    public function create(Request $request, 
+                        // SluggerInterface $slugger, 
+                        EntityManagerInterface $em)
     {
 
         $product= new Product;
@@ -96,7 +98,8 @@ class ProductController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $product->setSlug(strtolower($slugger->slug($product->getName())));
+            // depuis la vidéo 20.4, le slug est crée avec "App\Doctrine\Listener\ProductSlugListener"
+            // $product->setSlug(strtolower($slugger->slug($product->getName())));
 
             $em->persist($product);
             $em->flush();

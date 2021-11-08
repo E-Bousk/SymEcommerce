@@ -10,16 +10,18 @@ use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\String\Slugger\SluggerInterface;
+// use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture {
 
-    protected $slugger;
+    // protected $slugger;
     protected $encoder;
 
-    public function __construct(SluggerInterface $slugger, UserPasswordEncoderInterface $encoder) {
-        $this->slugger= $slugger;
+    public function __construct(UserPasswordEncoderInterface $encoder,
+                                // SluggerInterface $slugger
+    ) {
+        // $this->slugger= $slugger;
         $this->encoder= $encoder;
     }
 
@@ -60,7 +62,7 @@ class AppFixtures extends Fixture {
             $category= new Category;
 
             $category->setName($faker->department)
-                // voir vidéo 20.3
+                // voir vidéo 20.7
                 // ->setSlug(strtolower($this->slugger->slug($category->getName())))
             ;
 
