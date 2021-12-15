@@ -15,13 +15,15 @@ class PurchaseSuccessEmailSubscriber implements EventSubscriberInterface
 {
     protected $logger;
     protected $mailer;
-    protected $security;
+    // protected $security;
 
-    public function __construct(LoggerInterface $logger, MailerInterface $mailer, Security $security)
+    public function __construct(LoggerInterface $logger,
+                                // Security $security,
+                                MailerInterface $mailer)
     {
         $this->logger = $logger;
         $this->mailer = $mailer;
-        $this->security = $security;
+        // $this->security = $security;
     }
 
     public static function getSubscribedEvents()
@@ -35,8 +37,10 @@ class PurchaseSuccessEmailSubscriber implements EventSubscriberInterface
     {
         //Voir vidéo 21.6
         // 1. Recuperer l'utilisateur en ligne (avec le service Security)
+        // 1. Recuperer l'utilisateur en ligne (avec PurchaseSuccessEvent)
         /** @var User */
-        $currentUser= $this->security->getUser();
+        // $currentUser= $this->security->getUser();
+        $currentUser= $purchaseSuccessEvent->getPurchase()->getUser();
 
         // 2. Recuperer la commande (avec PurchaseSuccessEvent)
         $currentCommand= $purchaseSuccessEvent->getPurchase();
@@ -56,8 +60,6 @@ class PurchaseSuccessEmailSubscriber implements EventSubscriberInterface
         // 4. Envoyer le mail (avec MailerInterface)
         $this->mailer->send($email);
 
-        $this->logger->info("Email envoyé pour la commande n° " . $purchaseSuccessEvent->getPurchase()->getId());
-        $this->logger->info("Email envoyé pour la commande n° " . $purchaseSuccessEvent->getPurchase()->getId());
-        $this->logger->info("Email envoyé pour la commande n° " . $purchaseSuccessEvent->getPurchase()->getId());
+        // $this->logger->info("Email envoyé pour la commande n° " . $purchaseSuccessEvent->getPurchase()->getId());
     }
 }
