@@ -18,7 +18,7 @@
                         <a href="{{ path('cart_show') }}" class="nav-link">
                             <i class="fas fa-shopping-cart"></i>
                             Panier&nbsp;
-                            <span class="badge badge-secondary">ARTICLE(S) : {{ cartService.detailedCartItems|length }}</span>&nbsp;<span class="badge badge-secondary">TOTAL : {{ cartService.total }} €</span>
+                            <span class="badge badge-secondary">ARTICLE(S) : {{ cartService.detailedCartItems|length }}</span>&nbsp;<span class="badge badge-secondary">TOTAL : {{ cartService.total | amount }}</span>
                         </a>
                     </li>
                     {# Voir video 14.21 #}

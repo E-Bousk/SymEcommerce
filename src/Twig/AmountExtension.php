@@ -23,6 +23,6 @@ class AmountExtension extends AbstractExtension
         $finalValue = number_format($finalValue, 2, $decSep, $thousandSep);
         // 192,29
 
-        return $finalValue . "&nbsp;" . $symbol;
+        return sprintf('%s %s', $finalValue, $symbol);
     }
 }
